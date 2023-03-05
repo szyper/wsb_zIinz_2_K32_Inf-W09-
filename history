@@ -1,0 +1,33 @@
+https://www.apachefriends.org/pl/index.html
+
+DOCUMENT_ROOT	C:/xampp/htdocs
+upload_max_filesize	40M	40M
+Loaded Configuration File	C:\xampp\php\php.ini
+
+http://localhost/phpmyadmin/
+Typ serwera: MariaDB
+mysqld.exe
+
+https://github.com/szyper
+https://gitforwindows.org/
+
+git clone https://github.com/szyper/wsb_zIinz_2_K32_Inf-W09-.git
+git status
+git add *
+git commit
+
+git config --global user.email "mail@gmail.com"
+git config --global user.name "username"
+git commit
+
+i, <esc>, :wq
+
+git push origin main
+
+phpStrorm
+ctrl+~  (motywy)
+
+
+
+
+
