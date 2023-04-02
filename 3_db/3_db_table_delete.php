@@ -10,6 +10,15 @@
 </head>
 <body>
 	<h4>Użytkownicy</h4>
+  <?php
+    if (isset($_GET["deleteUser"])){
+      if ($_GET["deleteUser"] == 0){
+        echo "<h4>Nie udało się usunąć rekordu!</h4>";
+      }else{
+	      echo "<h4>Udało się usunąć rekordu o id = $_GET[deleteUser]</h4>";
+      }
+    }
+  ?>
 	<table>
 		<tr>
 			<th>Imię</th>
@@ -24,8 +33,13 @@
 		require_once "../scripts/connect.php";
 	$sql = "SELECT `u`.`id` `userId`,`u`.`firstName` `imie`, `u`.`lastName`, `u`.`birthday`, `c`.`city`, `s`.`state`, `co`.`country` FROM `users` u JOIN `cities` c ON `u`.`city_id`=`c`.`id` JOIN `states` s ON `c`.`state_id`=`s`.`id` JOIN `countries` co ON `s`.`country_id`=`co`.`id`;";
 		$result = $conn->query($sql);
-		while($user = $result->fetch_assoc()){
-			echo <<< TABLEUSERS
+    //echo $result->num_rows;
+
+    if ($result->num_rows == 0){
+      echo "<tr><td colspan='6'>Brak rekordów do wyświetlenia</td></tr>";
+    }else{
+	    while($user = $result->fetch_assoc()){
+		    echo <<< TABLEUSERS
 				<tr>
 <!--					<td>$user[userId]</td>-->
 					<td>$user[imie]</td>
@@ -37,7 +51,10 @@
 					<td><a href="../scripts/delete_user.php?userIdDelete=$user[userId]">Usuń</a></td>
 				</tr>
 TABLEUSERS;
-		}
+	    }
+    }
+
+
 		echo "</table>";
 	?>
 
