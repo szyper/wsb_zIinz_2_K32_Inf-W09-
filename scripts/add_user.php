@@ -11,5 +11,11 @@
 	}
 
 	require_once "./connect.php";
-	$sql = "INSERT INTO `users` (`id`, `city_id`, `firstName`, `lastName`, `birthday`) VALUES (NULL, '3', '$_POST[firstName]', 'NowakX', '2023-03-13');";
+	$sql = "INSERT INTO `users` (`id`, `city_id`, `firstName`, `lastName`, `birthday`) VALUES (NULL, '$_POST[city_id]', '$_POST[firstName]', '$_POST[lastName]', '$_POST[birthday]');";
 	$conn->query($sql);
+
+if ($conn->affected_rows == 0){
+	header("location: ../3_db/4_db_table_delete_add.php?addUser=0");
+}else{
+	header("location: ../3_db/4_db_table_delete_add.php?addUser=1");
+}

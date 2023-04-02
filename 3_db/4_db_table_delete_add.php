@@ -18,6 +18,15 @@
 	      echo "<h4>Udało się usunąć rekordu o id = $_GET[deleteUser]</h4>";
       }
     }
+
+    if (isset($_GET["addUser"])){
+      if ($_GET["addUser"] == 0){
+        echo "<h4>Nie udało się dodać rekordu!</h4>";
+      }else{
+	      echo "<h4>Dodano rekord</h4>";
+      }
+    }
+    
   ?>
 	<table>
 		<tr>
@@ -61,13 +70,23 @@ TABLEUSERS;
           <input type="text" name="firstName" placeholder="Podaj imię" autofocus><br><br>
           <input type="text" name="lastName" placeholder="Podaj nazwisko"><br><br>
           <input type="date" name="birthday">Data urodzenia<br><br>
-          <input type="number" name="city_id" placeholder="Podaj id miasta"><br><br>
+<!--          <input type="number" name="city_id" placeholder="Podaj id miasta"><br><br>-->
+          <select name="city_id">
+ADDUSERFORM;
+          $sql = "SELECT id, city FROM cities";
+          $result = $conn->query($sql);
+          while($city = $result->fetch_assoc()){
+            echo "<option value=\"$city[id]\">$city[city]</option>";
+          }
+	    echo <<< ADDUSERFORM
+          </select><br><br>
           <input type="submit" value="Dodaj użytkownika">
         </form>
 ADDUSERFORM;
     }else{
       echo '<a href="./4_db_table_delete_add.php?addUserForm=1">Dodaj użytkownika</a>';
     }
+    $conn->close();
 	?>
 
 </body>

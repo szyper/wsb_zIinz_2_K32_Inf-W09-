@@ -28,6 +28,10 @@ phpStrorm
 ctrl+~  (motywy)
 
 
+git checkout -b "add_user"
+git push --set-upstream origin add_user
+
+
 
 
 
