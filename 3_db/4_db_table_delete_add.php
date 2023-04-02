@@ -53,7 +53,21 @@
 TABLEUSERS;
 	    }
     }
-		echo "</table>";
+		echo "</table><hr>";
+    if (isset($_GET["addUserForm"])){
+      echo <<< ADDUSERFORM
+        <h4>Dodawanie użytkownika</h4>
+        <form action="../scripts/add_user.php" method="post">
+          <input type="text" name="firstName" placeholder="Podaj imię" autofocus><br><br>
+          <input type="text" name="lastName" placeholder="Podaj nazwisko"><br><br>
+          <input type="date" name="birthday">Data urodzenia<br><br>
+          <input type="number" name="city_id" placeholder="Podaj id miasta"><br><br>
+          <input type="submit" value="Dodaj użytkownika">
+        </form>
+ADDUSERFORM;
+    }else{
+      echo '<a href="./4_db_table_delete_add.php?addUserForm=1">Dodaj użytkownika</a>';
+    }
 	?>
 
 </body>
