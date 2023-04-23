@@ -23,7 +23,7 @@
     <div class="card-body">
       <p class="login-box-msg">Register a new membership</p>
 
-      <form action="../index.html" method="post">
+      <form action="../scripts/register_user.php" method="post">
         <div class="input-group mb-3">
           <input type="text" class="form-control" placeholder="Podaj imię" name="firstName">
           <div class="input-group-append">
@@ -88,9 +88,16 @@
         </div>
 
         <div class="input-group mb-3">
-          <select class="custom-select">
+          <select class="custom-select" name="city_id">
+            <?php
+              require_once "../scripts/connect.php";
+              $sql = "SELECT id, city FROM cities";
+              $result = $conn->query($sql);
+              while ($city = $result->fetch_assoc()){
+                echo "<option value='$city[id]'>$city[city]</option>";
+              }
+            ?>
 
-            <option>option 1</option>
           </select>
           <div class="input-group-append">
             <div class="input-group-text">
