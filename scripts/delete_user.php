@@ -12,10 +12,10 @@
 
 		if ($conn->affected_rows == 0){
 //			header("location: ../3_db/3_db_table_delete.php?deleteUser=0");
-			header("location: ../3_db/4_db_table_delete_add.php?deleteUser=0");
+			header("location: ../3_db/5_db_table_delete_add_update.php?deleteUser=0");
 		}else{
 			//echo "ok";
 //			header("location: ../3_db/3_db_table_delete.php?deleteUser=$_GET[userIdDelete]");
-			header("location: ../3_db/4_db_table_delete_add.php?deleteUser=$_GET[userIdDelete]");
+			header("location: ../3_db/5_db_table_delete_add_update.php?deleteUser=$_GET[userIdDelete]");
 		}
 	}

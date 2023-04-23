@@ -58,6 +58,7 @@
 					<td>$user[state]</td>
 					<td>$user[country]</td>
 					<td><a href="../scripts/delete_user.php?userIdDelete=$user[userId]">Usuń</a></td>
+					<td><a href="./5_db_table_delete_add_update.php?userIdUpdate=$user[userId]">Aktualizuj</a></td>
 				</tr>
 TABLEUSERS;
 	    }
@@ -84,8 +85,35 @@ ADDUSERFORM;
         </form>
 ADDUSERFORM;
     }else{
-      echo '<a href="./4_db_table_delete_add.php?addUserForm=1">Dodaj użytkownika</a>';
+      echo '<a href="./5_db_table_delete_add_update.php?addUserForm=1">Dodaj użytkownika</a>';
     }
+
+  //aktualizacja użytkownika
+  if (isset($_GET["userIdUpdate"])){
+    $sql = "SELECT * FROM users WHERE users.id = '$_GET[userIdUpdate]'";
+    $result = $conn->query($sql);
+    $updateUser = $result->fetch_assoc();
+		echo <<< UPDATEUSERFORM
+        <h4>Aktualizacja użytkownika</h4>
+        <form action="../scripts/add_user.php" method="post">
+          <input type="text" name="firstName" placeholder="Podaj imię" autofocus value="$updateUser[firstName]"><br><br>
+          <input type="text" name="lastName" placeholder="Podaj nazwisko"><br><br>
+          <input type="date" name="birthday">Data urodzenia<br><br>
+          <select name="city_id">
+UPDATEUSERFORM;
+		$sql = "SELECT id, city FROM cities";
+		$result = $conn->query($sql);
+		while($city = $result->fetch_assoc()){
+			echo "<option value=\"$city[id]\">$city[city]</option>";
+      //selected   $city[id]   $user[city_id]
+		}
+		echo <<< UPDATEUSERFORM
+          </select><br><br>
+          <input type="submit" value="Aktualizuj użytkownika">
+        </form>
+UPDATEUSERFORM;
+	}
+
     $conn->close();
 	?>
 
