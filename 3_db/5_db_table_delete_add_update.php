@@ -1,3 +1,6 @@
+<?php
+  session_start();
+?>
 <!doctype html>
 <html lang="pl">
 <head>
@@ -25,6 +28,11 @@
       }else{
 	      echo "<h4>Dodano rekord</h4>";
       }
+    }
+
+    if (isset($_SESSION["error"])){
+      echo "<h4>$_SESSION[error]</h4>";
+      unset($_SESSION["error"]);
     }
 
   ?>
@@ -90,25 +98,30 @@ ADDUSERFORM;
 
   //aktualizacja użytkownika
   if (isset($_GET["userIdUpdate"])){
+    $_SESSION["userIdUpdate"] = $_GET["userIdUpdate"];
     $sql = "SELECT * FROM users WHERE users.id = '$_GET[userIdUpdate]'";
     $result = $conn->query($sql);
     $updateUser = $result->fetch_assoc();
 		echo <<< UPDATEUSERFORM
         <h4>Aktualizacja użytkownika</h4>
-        <form action="../scripts/add_user.php" method="post">
+        <form action="../scripts/update_user.php" method="post">
           <input type="text" name="firstName" placeholder="Podaj imię" autofocus value="$updateUser[firstName]"><br><br>
-          <input type="text" name="lastName" placeholder="Podaj nazwisko"><br><br>
-          <input type="date" name="birthday">Data urodzenia<br><br>
+          <input type="text" name="lastName" placeholder="Podaj nazwisko" value="$updateUser[lastName]"><br><br>
+          <input type="date" name="birthday" value="$updateUser[birthday]">Data urodzenia<br><br>
           <select name="city_id">
 UPDATEUSERFORM;
 		$sql = "SELECT id, city FROM cities";
 		$result = $conn->query($sql);
 		while($city = $result->fetch_assoc()){
-			echo "<option value=\"$city[id]\">$city[city]</option>";
-      //selected   $city[id]   $user[city_id]
+      if ($city["id"] == $updateUser["city_id"]){
+	      echo "<option value=\"$city[id]\" selected>$city[city]</option>";
+      }else{
+	      echo "<option value=\"$city[id]\">$city[city]</option>";
+      }
 		}
 		echo <<< UPDATEUSERFORM
           </select><br><br>
+          <input type="checkbox" name="terms"> Regulamin<br><br>
           <input type="submit" value="Aktualizuj użytkownika">
         </form>
 UPDATEUSERFORM;
