@@ -1,5 +1,8 @@
 <?php
   session_start();
+  if (isset($_SESSION["logged"]) && session_status() == 2){
+    header("location: ./view/logged.php");
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
