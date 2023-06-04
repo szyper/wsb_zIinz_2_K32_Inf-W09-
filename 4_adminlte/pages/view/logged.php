@@ -22,7 +22,7 @@ if (isset($_SESSION["logged"]["last_activity"])){
 	//echo $_SESSION["logged"]["last_activity"];
 	$lastActivityTime = $_SESSION["logged"]["last_activity"];
 	$currentTime = time();
-	$sessionTimeout = 5; //1 minuta
+	$sessionTimeout = 1440; //1 minuta
 
 	if ($currentTime - $lastActivityTime > $sessionTimeout){
 		$_SESSION["error"] = "Sesja użytkownika wygasła!";
