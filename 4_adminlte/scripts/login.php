@@ -28,21 +28,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
 	//	echo $user["firstName"];
 		if ($result->num_rows != 0){
+			//adres ip
+			$address_ip = $_SERVER["REMOTE_ADDR"];
 			//porównanie hasła
 			if (password_verify($_POST["pass"], $user["pass"])){
 				//echo "zalogowany";
 				$_SESSION["logged"]["firstName"] = $user["firstName"];
 				$_SESSION["logged"]["lastName"] = $user["lastName"];
 				$_SESSION["logged"]["role_id"] = $user["role_id"];
+				$_SESSION["logged"]["logo"] = $user["logo"];
 				$_SESSION["logged"]["session_id"] = session_id();
 				//echo $_SESSION["logged"]["session_id"];
 				//echo "<br>".session_status();
 				//exit();
 				$_SESSION["logged"]["last_activity"] = time();
 				//echo $_SESSION["logged"]["last_activity"];
-
-				//adres ip
-				$address_ip = $_SERVER["REMOTE_ADDR"];
 
 				//echo $user["id"];
 				//echo $address_ip;
@@ -59,6 +59,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 				exit();
 			}else{
 				//echo "niezalogowany!";
+				$status = 0;
+				$sql = "INSERT INTO `logs` (`user_id`, `status`, `address_ip`) VALUES ( ?, ?, ?);";
+				$stmt = $conn->prepare($sql);
+				$stmt->bind_param("iss", $user["id"], $status,  $address_ip);
+				$stmt->execute();
+
 				$_SESSION["error"] = "Błędny login lub hasło!";
 				echo "<script>history.back();</script>";
 				exit();
